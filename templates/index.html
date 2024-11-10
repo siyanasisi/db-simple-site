@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Simple Web App</title>
+</head>
+<body>
+    <h1>Entries</h1>
+    <form action ="/add" method="post">
+        <input type="text" name="content" placeholder="add a new entry" required>
+        <button type="submit">add</button>
+    </form>
+    <ul>
+        {% for entry in entries %}
+        <li>{{ entry[1] }}</li>
+    {% endfor %}  
+    </ul>
+</body>
+</html>

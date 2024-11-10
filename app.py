@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect  
+from flask import Flask, session, render_template, request, g 
 
 app = Flask(__name__)
 
@@ -20,16 +20,17 @@ def index():
     return render_template('index.html', entries=entries)
 
 @app.route('/add', methods=['POST'])
-def add_entry():
+def add_enry():
     content = request.form['content']
-    if content:
-        conn = sqlite3.connect('database.db')
-        c = conn.cursor()
-        c.execute('INSERT INTO entries (content) VALUES (?)', (content,))
-        conn.commit()
-        conn.close()
-    return redirect('/')  
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    
+    c.execute('INSERT INTO entries (content) VALUES (?)', (content,))
+    conn.commit()
+    conn.close()
+    return redirect('/')
 
-if __name__ == '__main__':
+
+if __name__ =='__main__':
     init_db()
     app.run(debug=True)
