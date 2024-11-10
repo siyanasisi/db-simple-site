@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  flask_app:
+    build:
+    ports:
+      - "5000:5000"
+    volumes:
+      - flask-app-volume:/app
+      - ./database.db:/app/database.db
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+    command: flask run 
+
+  sqlite-db:
+    image: nouchka/sqlite
+    volumes:
+      - flask_app_volume:/db
+    command: tail -f /dev/null
+
+  volmes:
+    flask_app_volume:
